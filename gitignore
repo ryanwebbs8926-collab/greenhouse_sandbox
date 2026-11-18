@@ -1,0 +1,37 @@
+# Virtual environments (each person creates their own)
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Mission logs (about 11 MB each; do not commit or submit them)
+# Adjust these patterns to match the file names the sandbox actually writes.
+logs/
+mission_logs/
+mission_log*.csv
+*.log
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+# Keep shared VS Code settings, ignore the rest
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
