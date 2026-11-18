@@ -1,7 +1,7 @@
 # GIVEN FILE: DO NOT EDIT.
 #
 # This file calls your four actuator functions and gives the simulator one
-# ActuatorCommands result per tick. Do not change anything here.
+# ActuatorCommands result per tick. DO NOT CHANGE ANYTHING HERE.
 # Do your engineering work in heater.py, leds.py, co2.py, and pump.py.
 
 from .heater import control_heater

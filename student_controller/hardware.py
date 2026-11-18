@@ -11,5 +11,5 @@ Milestone 2 insulation activity and record the rationale in your report.
 # TODO: Replace None with your team's choices.
 #   GLAZING:  "polycarbonate", "twin_wall", "aerogel", or "vacuum_panel"
 #   HEATER_W: 2000 or 3000
-GLAZING = None
-HEATER_W = None
+GLAZING = "twin_wall"
+HEATER_W = 3000
