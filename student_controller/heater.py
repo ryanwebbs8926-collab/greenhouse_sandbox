@@ -11,13 +11,20 @@ def control_heater(readings, setpoints, dt, state) -> float:
     setpoint = setpoints.temperature_c
     
     if temp >= 30:
+        state['heater_total'] = 0
         return 0.0
     error = setpoint-temp
-    integral = integral + error * dt
-    output   = KP * error + KI * integral
+    integral = state.get('heater_integral', 0.0)
+    prev_total = state.get('heater_total', 0.0)
 
-    if state['heater_total'] == 100.0 and error > 0.0 or state['heater_total'] == 0.0 and error < 0.0:
-        integral = 0.0
+    
+
+    if not ((prev_total >= 100.0 and error > 0.0) or (prev_total <= 0.0 and error < 0.0)):
+        integral = integral + error * dt
+    output   = _clamp(KP * error + KI * integral, 0.0, 100.0)
+
+    state["heater_integral"] = integral
+    state["heater_total"] = output
     
     return _clamp(output, 0.0, 100.0)
 
