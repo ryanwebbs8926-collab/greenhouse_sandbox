@@ -10,7 +10,7 @@ def control_leds(readings, setpoints, dt, state) -> float:
     if setpoints.is_daytime == True:
         output = 0.0
     else:
-        light= readings.par_umol_ms_s-old*3
+        light= readings.par_umol_m2_s-old*3
         output = (300-light)/3
 
     
