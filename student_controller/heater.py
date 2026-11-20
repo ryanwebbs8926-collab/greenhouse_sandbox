@@ -2,9 +2,25 @@
 
 Owner: <name>
 """
-
+from .helpers import _clamp
+KI = 0.003
+KP = 8.0
 
 def control_heater(readings, setpoints, dt, state) -> float:
+    temp = readings.temperature_c
+    setpoint = setpoints.temperature_c
+    
+    if temp >= 30:
+        return 0.0
+    error = setpoint-temp
+    integral = integral + error * dt
+    output   = KP * error + KI * integral
+
+    if state['heater_total'] == 100.0 and error > 0.0 or state['heater_total'] == 0.0 and error < 0.0:
+        integral = 0.0
+    
+    return _clamp(output, 0.0, 100.0)
+
     """Return the heater power for this tick, a number in [0, 100].
 
     Parameters

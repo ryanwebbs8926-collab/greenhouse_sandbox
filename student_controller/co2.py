@@ -2,9 +2,30 @@
 
 Owner: <name>
 """
-
+from .helpers import _clamp
+import math
 
 def control_co2(readings, setpoints, dt, state) -> float:
+    co2_k30 = readings.co2_ppm_primary
+    co2_scd41 = readings.co2_ppm_backup
+
+    if abs(co2_k30-co2_scd41) >200 or math.isfinite(co2_k30) == False:
+        co2 = co2_scd41
+    elif abs(co2_k30-co2_scd41) <200:
+        co2 = (co2_k30+co2_scd41)/2
+    
+
+    if co2 < 850:
+        output = 20
+    elif  850 <= co2 < 900:
+        output = 5
+    elif co2 >= 900:
+        output = 0
+    elif co2_k30 >=1000 or co2_scd41 >1000:
+        output = 0
+
+    return _clamp(output, 0.0, 100.0)
+    
     """Return the CO2 valve opening for this tick, a number in [0, 100].
 
     Parameters

@@ -1,10 +1,21 @@
 """Pump control for the GHU-2 greenhouse (percent speed, 0 to 100).
 
-Owner: <name>
+Owner: <Ryan Weber>
 """
-
+from .helpers import _clamp
 
 def control_pump(readings, setpoints, dt, state) -> float:
+    soil_readings = readings.soil_vwc()
+    hum_readings = readings.rh_pct()
+
+    if soil_readings < 0.3 and hum_readings <0.6:
+        output = 100
+    elif soil_readings < 0.2:
+        output = 100
+    else:
+        output = 0
+    return _clamp(output, 0.0, 100.0)
+    
     """Return the pump speed for this tick, a number in [0, 100].
 
     Parameters
@@ -33,4 +44,4 @@ def control_pump(readings, setpoints, dt, state) -> float:
     # before you return it:
     #   1. At the top of this file, add "from .helpers import _clamp".
     #   2. Return "_clamp(u, 0.0, 100.0)", where u is your command.
-    return 0.0
+    

@@ -1,11 +1,21 @@
 """LED control for the GHU-2 greenhouse (percent intensity, 0 to 100).
 
-Owner: <name>
+Owner: <Ryan Weber>
 """
-
+from .helpers import _clamp
 
 def control_leds(readings, setpoints, dt, state) -> float:
-    """Return the LED intensity for this tick, a number in [0, 100].
+    led_reading = readings.par_umol_m2_s
+    old = state.get("leds_total")
+    if setpoints.isdaytime == True:
+        output = 0.0
+    else:
+        light= readings.par_umol_ms_s-old*3
+        output = (300-light)/3
+
+    
+    return _clamp(output, 0.0, 100.0)
+    """
 
     Parameters
     ----------
@@ -33,4 +43,4 @@ def control_leds(readings, setpoints, dt, state) -> float:
     # before you return it:
     #   1. At the top of this file, add "from .helpers import _clamp".
     #   2. Return "_clamp(u, 0.0, 100.0)", where u is your command.
-    return 0.0
+    
