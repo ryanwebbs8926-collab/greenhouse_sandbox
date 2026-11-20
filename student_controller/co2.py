@@ -11,7 +11,7 @@ def control_co2(readings, setpoints, dt, state) -> float:
 
     if abs(co2_k30-co2_scd41) >200 or math.isfinite(co2_k30) == False:
         co2 = co2_scd41
-    elif abs(co2_k30-co2_scd41) <200:
+    elif abs(co2_k30-co2_scd41) <= 200:
         co2 = (co2_k30+co2_scd41)/2
     
 

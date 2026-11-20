@@ -6,8 +6,8 @@ from .helpers import _clamp
 
 def control_leds(readings, setpoints, dt, state) -> float:
     led_reading = readings.par_umol_m2_s
-    old = state.get("leds_total")
-    if setpoints.is_daytime == True:
+    old = state.get("leds_total", 0.0)
+    if not setpoints.is_daytime == True:
         output = 0.0
     else:
         light= readings.par_umol_m2_s-old*3

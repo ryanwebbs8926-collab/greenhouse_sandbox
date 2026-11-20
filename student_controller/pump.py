@@ -5,8 +5,8 @@ Owner: <Ryan Weber>
 from .helpers import _clamp
 
 def control_pump(readings, setpoints, dt, state) -> float:
-    soil_readings = readings.soil_vwc()
-    hum_readings = readings.rh_pct()
+    soil_readings = readings.soil_vwc
+    hum_readings = readings.rh_pct
 
     if soil_readings < 0.3 and hum_readings <0.6:
         output = 100
